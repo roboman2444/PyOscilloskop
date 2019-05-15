@@ -27,11 +27,13 @@ class ScopeStrategy:
     pass
 
 class DS1000Strategy(ScopeStrategy):
+    numpts = 600
     def get_data(self, scope, channel):
         scope.write(":WAV:POIN:MODE NOR")
         scope.write(":WAV:DATA? " + channel)
 
 class DS2000Strategy(ScopeStrategy):
+    numpts = 1400
     def get_data(self, scope, channel):
         scope.write(":WAV:POIN:MODE MAX")
         scope.write(":WAV:SOUR " + channel)
@@ -109,4 +111,4 @@ class RigolScope(RigolDevice):
         return self.get_scope_information_float(self.GET_TIME_SCALE, self.GET_OFFSET)
 
     def get_time_axis(self):
-        return time_axis.TimeAxis(self.get_time_scale())
+        return time_axis.TimeAxis(self.get_time_scale(), self.strategy.numpts)
