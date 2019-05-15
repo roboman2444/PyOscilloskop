@@ -40,9 +40,15 @@ def main():
     app = interface
 
     if args.ipv6:
-        app.run(host='::', server='cherrypy', port=args.port)
+        try:
+            app.run(host='::', server='cheroot', port=args.port)
+        except:
+            app.run(host='::', server='cherrypy', port=args.port)
     else:
-        app.run(host='0.0.0.0', server='cheroot', port=args.port, debug=True)
+        try:
+            app.run(host='0.0.0.0', server='cheroot', port=args.port, debug=True)
+        except:
+            app.run(host='0.0.0.0', server='cherrypy', port=args.port, debug=True)
 
 if __name__ == '__main__':
     main()
