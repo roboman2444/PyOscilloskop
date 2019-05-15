@@ -57,7 +57,7 @@ class RigolScope(RigolDevice):
             device.message_delay = 0.02
         except:
             pass
-        self.strategy = RigolScope.strategies[self.getModel()[:3]]
+        self.strategy = RigolScope.strategies[self.get_model()[:3]]
         self.channel1 = rigol_scope_channel.RigolScopeChannel(self, self.CHANNEL1);
         self.channel2 = rigol_scope_channel.RigolScopeChannel(self, self.CHANNEL2);        
         
