@@ -4,6 +4,7 @@
 import os
 import inspect
 import logging
+from traceback import print_exc
 
 from pyoscilloskop import RigolScope
 from pyoscilloskop import RigolError
@@ -99,7 +100,7 @@ def current_trace(scope):
         ret_dict['timeData'] = time_values.tolist()
         ret_dict['timeAxisMin'] = time_values.min()
         ret_dict['timeAxisMax'] = time_values.max()
-        ret_dict['timeAxisUnit'] = time_axis.getUnit()
+        ret_dict['timeAxisUnit'] = time_axis.get_unit()
         channel_1 = scope.get_channel_1()
         channel_1_data = channel_1.capture()
         ret_dict['channel1Data'] =   channel_1_data['volt_samples'].tolist()
@@ -112,6 +113,7 @@ def current_trace(scope):
         ret_dict['channel2Offset'] = channel_2_data['volt_offset']
         scope.reactivate_control_buttons()
     except Exception as e:
+        print_exc(e)
         abort(500, str(type(e)))
     return ret_dict
 

@@ -22,17 +22,17 @@ import time
 from . import rigol_scope_channel
 from . import time_axis
 from .rigol_device import RigolDevice, RigolError, RigolUsageError
-        
+
 class ScopeStrategy:
     pass
 
 class DS1000Strategy(ScopeStrategy):
-    def getData(self, scope, channel):
+    def get_data(self, scope, channel):
         scope.write(":WAV:POIN:MODE NOR")
         scope.write(":WAV:DATA? " + channel)
 
 class DS2000Strategy(ScopeStrategy):
-    def getData(self, scope, channel):
+    def get_data(self, scope, channel):
         scope.write(":WAV:POIN:MODE MAX")
         scope.write(":WAV:SOUR " + channel)
         scope.write(":WAV:DATA?")
@@ -59,8 +59,8 @@ class RigolScope(RigolDevice):
             pass
         self.strategy = RigolScope.strategies[self.get_model()[:3]]
         self.channel1 = rigol_scope_channel.RigolScopeChannel(self, self.CHANNEL1);
-        self.channel2 = rigol_scope_channel.RigolScopeChannel(self, self.CHANNEL2);        
-        
+        self.channel2 = rigol_scope_channel.RigolScopeChannel(self, self.CHANNEL2);
+
     def get_name(self):
         return self.dev.idn
 
@@ -69,44 +69,44 @@ class RigolScope(RigolDevice):
 
     def get_device(self):
         return self.device
-        
+
     def run(self):
         self.write(":RUN")
-        
+
     def stop(self):
         self.write(":STOP")
-        
+
     def reactivate_control_buttons(self):
         self.write(":KEY:FORC")
-    
+
     def get_scope_information(self, channel, command, read_bytes):
         self.write(":" + channel + ":" + command)
         return self.read(read_bytes)
-        
+
     def get_scope_information_float(self, channel, command):
         raw_scope_information = self.get_scope_information(channel, command, 30)
         float_scope_information = float(raw_scope_information)
         return float_scope_information
-    
+
     def get_scope_information_integer(self, channel, command):
         raw_scope_information = self.get_scope_information(channel, command, 30)
         int_scope_information = int(raw_scope_information)
         return int_scope_information
-    
+
     def get_scope_information_string(self, channel, command, readBytes):
         return self.get_scope_information(channel, command, readBytes)
-        
+
     def get_channel_1(self):
         return self.channel1
-        
+
     def get_channel_2(self):
         return self.channel2
-        
+
     def get_time_scale(self):
         return self.get_scope_information_float(self.GET_TIME_SCALE, self.GET_SCALE)
-        
+
     def get_timescale_offset(self):
         return self.get_scope_information_float(self.GET_TIME_SCALE, self.GET_OFFSET)
-        
+
     def get_time_axis(self):
         return time_axis.TimeAxis(self.get_time_scale())

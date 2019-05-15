@@ -22,17 +22,17 @@ import time
 
 #This class has function to get informations about one channel. Instances of these class could be accessed by the class Rigol scope
 class RigolScopeChannel:
-    
+
     def __init__(self, scope, channel_name):
         self.scope = scope
         self.channel_name = channel_name
-        
+
     def get_voltage_scale(self):
         return self.scope.get_scope_information_float(self.channel_name, self.scope.GET_SCALE)
-        
+
     def get_voltage_offset(self):
         return self.scope.get_scope_information_float(self.channel_name, self.scope.GET_OFFSET)
-    
+
     def is_channel_active(self):
         return self.scope.get_scope_information_integer(self.channel_name, self.scope.GET_DISPLAY_ACTIVE) == 1
 

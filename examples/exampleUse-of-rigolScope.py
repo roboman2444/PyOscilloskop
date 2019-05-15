@@ -15,10 +15,10 @@ device = Instrument(dev_name)
 
 scope = RigolScope(device)
 
-channel1Data = scope.getChannel1().getData();
-channel2Data = scope.getChannel2().getData();
+channel1Data = scope.get_channel_1().get_data();
+channel2Data = scope.get_channel_2().get_data();
 print("{0} values received for channel 1.".format(len(channel1Data)))
 print("{0} values received for channel 2.".format(len(channel2Data)))
 
-scope.reactivateControlButtons()
+scope.reactivate_control_buttons()
 

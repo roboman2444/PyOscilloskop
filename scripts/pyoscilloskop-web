@@ -6,13 +6,13 @@ import logging
 import argparse
 
 from universal_usbtmc import import_backend
-from pyoscilloskop.webapp import RigolPlugin, api, interface, DEFAULT_CONTEXT 
+from pyoscilloskop.webapp import RigolPlugin, api, interface, DEFAULT_CONTEXT
 
 logger = logging.getLogger(__name__)
 
 def main():
     #global DEFAULT_CONTEXT
-    parser = argparse.ArgumentParser( 
+    parser = argparse.ArgumentParser(
       description='Run a web servers for your Rigol Scope' )
     parser.add_argument('-p', '--port', type=int, default=8080,
       help='The port to run the web server on.')
@@ -42,7 +42,7 @@ def main():
     if args.ipv6:
         app.run(host='::', server='cherrypy', port=args.port)
     else:
-        app.run(host='0.0.0.0', server='cherrypy', port=args.port, debug=True)
+        app.run(host='0.0.0.0', server='cheroot', port=args.port, debug=True)
 
 if __name__ == '__main__':
     main()

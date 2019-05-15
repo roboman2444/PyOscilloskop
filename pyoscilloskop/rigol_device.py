@@ -34,7 +34,7 @@ class RigolDevice(object):
     def write(self, *args, **kwargs):
         """Send a command directly to the device"""
         self.dev.write(*args, **kwargs)
- 
+
     def read(self, *args, **kwargs):
         """Read text data from the device"""
         return self.dev.read(*args, **kwargs)
